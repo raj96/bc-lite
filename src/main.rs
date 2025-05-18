@@ -30,70 +30,70 @@ fn expr_get_tokens(expr: String) -> Vec<ExprToken> {
 	let mut ch_tok: char = '_';
     
 	while i < expr_len {
-		let mut digit_found = false;
-        while i < expr_len {
-			ch_tok = expr.chars().nth(i).unwrap();
-			if token_is_digit(ch_tok) {
-				digit_found = true;
-				token_value.push(ch_tok);
-				i += 1;
-			} else { break; }
-        }
-		if digit_found {
-			tokens.push(ExprToken {
-				expr_class: ExprClass::Operand,
-				expr_value: token_value.parse::<f64>().unwrap(),
-			});
-			token_value = "".to_string();
+	    let mut digit_found = false;
+	    while i < expr_len {
+			    ch_tok = expr.chars().nth(i).unwrap();
+			    if token_is_digit(ch_tok) {
+				    digit_found = true;
+				    token_value.push(ch_tok);
+				    i += 1;
+			    } else { break; }
+	    }
+	    if digit_found {
+		    tokens.push(ExprToken {
+			    expr_class: ExprClass::Operand,
+			    expr_value: token_value.parse::<f64>().unwrap(),
+		    });
+		    token_value = "".to_string();
+	    }
+
+
+	    match ch_tok {
+		'+' => {
+		    tokens.push(ExprToken {
+			expr_class: ExprClass::Plus,
+			expr_value: 0.0,
+		    });
 		}
-
-
-        match ch_tok {
-            '+' => {
-                tokens.push(ExprToken {
-                    expr_class: ExprClass::Plus,
-                    expr_value: 0.0,
-                });
-            }
-            '-' => {
-                tokens.push(ExprToken {
-                    expr_class: ExprClass::Minus,
-                    expr_value: 0.0,
-                });
-            }
-            '*' => {
-                tokens.push(ExprToken {
-                    expr_class: ExprClass::Mul,
-                    expr_value: 0.0,
-                });
-            }
-            '/' => {
-                tokens.push(ExprToken {
-                    expr_class: ExprClass::Div,
-                    expr_value: 0.0,
-                });
-            }
-            '(' => {
-                tokens.push(ExprToken {
-                    expr_class: ExprClass::LParen,
-                    expr_value: 0.0,
-                });
-            }
-            ')' => {
-                tokens.push(ExprToken {
-                    expr_class: ExprClass::RParen,
-                    expr_value: 0.0,
-                });
-            }
-            '\n' => {}
-            '\t' => {}
-            '\r' => {}
-            ' ' => {}
-            err => {
-                eprintln!("Unexpected character {}", err);
-                exit(2);
-            }
-        }
+		'-' => {
+		    tokens.push(ExprToken {
+			expr_class: ExprClass::Minus,
+			expr_value: 0.0,
+		    });
+		}
+		'*' => {
+		    tokens.push(ExprToken {
+			expr_class: ExprClass::Mul,
+			expr_value: 0.0,
+		    });
+		}
+		'/' => {
+		    tokens.push(ExprToken {
+			expr_class: ExprClass::Div,
+			expr_value: 0.0,
+		    });
+		}
+		'(' => {
+		    tokens.push(ExprToken {
+			expr_class: ExprClass::LParen,
+			expr_value: 0.0,
+		    });
+		}
+		')' => {
+		    tokens.push(ExprToken {
+			expr_class: ExprClass::RParen,
+			expr_value: 0.0,
+		    });
+		}
+		'\n' => {}
+		'\t' => {}
+		'\r' => {}
+		' ' => {}
+		err => {
+		    eprintln!("Unexpected character {}", err);
+		    exit(2);
+		}
+	    }
         i += 1;
     }
 
